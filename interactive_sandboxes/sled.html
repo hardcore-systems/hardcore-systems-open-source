@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Sled 无锁 B-Link 树与 Delta 日志段沙盒</title>
+    <title>Sled Lock-Free B-Link Tree & Delta Log Sandbox</title>
     <style>
         body {
             background-color: #121824;
@@ -143,16 +143,16 @@
 </head>
 <body>
     <div class="container">
-        <h1>Sled 无锁 B-Link 树与 Delta 日志段沙盒</h1>
+        <h1>Sled Lock-Free B-Link Tree & Delta Log Sandbox</h1>
         <div class="grid">
             <!-- Sandbox 1: Lock-Free B-Link Tree Split -->
             <div class="card">
-                <h2>B-Link Tree 无锁分裂与右链接跳转模拟</h2>
+                <h2>Lock-Free B-Link Tree Split Simulator</h2>
                 <div class="control-group">
-                    <button class="btn" style="background-color:#4B5F7A;" onclick="insertKey()">向叶子页 Leaf A 写入键值</button>
-                    <button class="btn" style="background-color:#9C6666;" onclick="splitLeaf()">执行叶子页物理分裂（第一阶段 CAS）</button>
-                    <button class="btn" style="background-color:#9A825A;" onclick="readKey()">读取 Key='K3' (验证跳转)</button>
-                    <button class="btn" style="background-color:#755B77;" onclick="asyncParentUpdate()">执行异步父路由更新（第二阶段）</button>
+                    <button class="btn" style="background-color:#4B5F7A;" onclick="insertKey()">Insert Key-Value (Write to Leaf A)</button>
+                    <button class="btn" style="background-color:#9C6666;" onclick="splitLeaf()">Trigger Leaf Page Split (CAS Phase 1)</button>
+                    <button class="btn" style="background-color:#9A825A;" onclick="readKey()">Read Key 'K3' (Traversal Check)</button>
+                    <button class="btn" style="background-color:#755B77;" onclick="asyncParentUpdate()">Trigger Async Parent Update (Phase 2)</button>
                 </div>
                 <div class="visualizer" id="tree-vis">
                     <div class="tree-layout">
@@ -171,12 +171,12 @@
 
             <!-- Sandbox 2: Log-Structured Memory & Delta GC -->
             <div class="card">
-                <h2>日志结构内存 Delta 链与物理 GC 段整理模拟</h2>
+                <h2>Log-Structured Memory & Delta GC Simulator</h2>
                 <div class="control-group">
-                    <button class="btn" style="background-color:#6B8272;" onclick="writeDelta()">写入物理 Delta 变更</button>
-                    <button class="btn" style="background-color:#7A7A7A;" onclick="triggerConsolidation()">执行页合并压实 (Consolidation)</button>
-                    <button class="btn" style="background-color:#9A825A;" onclick="triggerGC()">执行后台 Segment GC 搬迁回收</button>
-                    <button class="btn" style="background-color:#9C6666;" onclick="resetSled()">重置沙盒模拟</button>
+                    <button class="btn" style="background-color:#6B8272;" onclick="writeDelta()">Write Delta Update (Put/Delete)</button>
+                    <button class="btn" style="background-color:#7A7A7A;" onclick="triggerConsolidation()">Trigger Page Consolidation</button>
+                    <button class="btn" style="background-color:#9A825A;" onclick="triggerGC()">Trigger Segment GC Cleanup</button>
+                    <button class="btn" style="background-color:#9C6666;" onclick="resetSled()">Reset Sandbox</button>
                 </div>
                 <div class="visualizer" id="log-vis">
                     <div class="status-badge" id="pagetable-status">Page Table mapping: Page 5 ➜ Delta Chain (Head)</div>
@@ -208,7 +208,7 @@
     </div>
 
     <script>
-        const isEn = false;
+        const isEn = true;
         
         // Console messages
         const msgInsert = (key) => isEn ? `[Tree] Inserted Key ${key} into Leaf A. Slots: ${leafASlots.join(', ')}` : `[树结构] 写入 Key ${key} 至叶子页 Leaf A。当前 Slots: ${leafASlots.join(', ')}`;

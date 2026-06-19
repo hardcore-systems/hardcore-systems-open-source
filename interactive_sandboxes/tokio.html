@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Tokio Work-Stealing 任务调度与异步协同仿真沙盒</title>
+    <title>Tokio Work-Stealing & Async Coordination Sandbox</title>
     <style>
         body {
             background-color: #121824;
@@ -117,14 +117,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>Tokio Work-Stealing 任务调度与异步协同仿真沙盒</h1>
+        <h1>Tokio Work-Stealing & Async Coordination Sandbox</h1>
         <div class="grid">
             <!-- Sandbox 1: Work-Stealing -->
             <div class="card">
-                <h2>Tokio Work-Stealing 本地与全局调度器模拟器</h2>
+                <h2>Tokio Work-Stealing Run Queue Simulator</h2>
                 <div class="control-group">
-                    <button class="btn" onclick="spawnTask()">发布新任务</button>
-                    <button class="btn" style="background-color:#6B8272;" onclick="tickScheduler()">单步调度时钟 (Tick)</button>
+                    <button class="btn" onclick="spawnTask()">Spawn Task</button>
+                    <button class="btn" style="background-color:#6B8272;" onclick="tickScheduler()">Tick Scheduler</button>
                 </div>
                 <div class="visualizer" id="steal-container">
                     <!-- Global Queue -->
@@ -143,10 +143,10 @@
 
             <!-- Sandbox 2: Mutex & Channel -->
             <div class="card">
-                <h2>Tokio 协程锁与 MPSC 协作式同步模拟器</h2>
+                <h2>Tokio Async Mutex & MPSC Coordination</h2>
                 <div class="control-group">
-                    <button class="btn" onclick="sendMPSC()">MPSC 发送消息</button>
-                    <button class="btn" style="background-color:#755B77;" onclick="consumeMPSC()">消费消息并竞争协程锁</button>
+                    <button class="btn" onclick="sendMPSC()">MPSC Send Msg</button>
+                    <button class="btn" style="background-color:#755B77;" onclick="consumeMPSC()">MPSC Consume & Lock</button>
                 </div>
                 <div class="visualizer" id="coop-container">
                     <div class="mutex-status" id="mutex-state-box">

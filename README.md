@@ -28,7 +28,7 @@ This repository provides visual cheatsheets, 10 standalone offline interactive s
 ## 🛠️ How to Use
 
 ### 1. Visual Sandboxes (For Humans)
-Go to the `interactive_sandboxes/` directory, choose any `.html` file (e.g., `tokio-互动演练沙盒-v1.html`), and open it in any web browser. Use the sliders and interactive buttons to simulate task stealing, thread scheduling, or consistent hashing load balance standard deviations.
+Go to the `interactive_sandboxes/` directory, choose any `.html` file (e.g., `tokio.html`), and open it in any web browser. Use the sliders and interactive buttons to simulate task stealing, thread scheduling, or consistent hashing load balance standard deviations.
 
 ### 2. Headless Systems Gym (For AI Agents)
 Initialize the gym in Python to run headless simulations:

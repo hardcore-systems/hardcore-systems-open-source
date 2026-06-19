@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>dae eBPF 内核重定向与 TProxy/DNS 劫持沙盒</title>
+    <title>dae eBPF TC Redirect & TProxy DNS Sandbox</title>
     <style>
         body {
             background-color: #121824;
@@ -157,15 +157,15 @@
 </head>
 <body>
     <div class="container">
-        <h1>dae eBPF 内核重定向与 TProxy/DNS 劫持沙盒</h1>
+        <h1>dae eBPF TC Redirect & TProxy DNS Sandbox</h1>
         <div class="grid">
             <!-- Sandbox 1: eBPF Redirect -->
             <div class="card">
-                <h2>eBPF TC 钩子与 SOCKMAP 物理内存重定向模拟器</h2>
+                <h2>eBPF TC & SOCKMAP Packet Redirection Simulator</h2>
                 <div class="control-group">
-                    <button class="btn" style="background-color:#4B5F7A;" onclick="sendPacket()">发送 TCP 数据包 (目标外网)</button>
+                    <button class="btn" style="background-color:#4B5F7A;" onclick="sendPacket()">Send TCP Packet (to WAN)</button>
                     <label style="font-size:11px; cursor:pointer;">
-                        <input type="checkbox" id="bypass-check" onchange="toggleBypass()"> 开启 eBPF msg_redirect (协议栈短路)
+                        <input type="checkbox" id="bypass-check" onchange="toggleBypass()"> Enable eBPF msg_redirect (Bypass Stack)
                     </label>
                 </div>
                 <div class="visualizer" id="ebpf-vis">
@@ -193,12 +193,12 @@
 
             <!-- Sandbox 2: TProxy & DNS Spoofing -->
             <div class="card">
-                <h2>TProxy 透明代理与 DNS 劫持分流模拟器</h2>
+                <h2>TProxy & DNS Spoofing Split Routing Simulator</h2>
                 <div class="control-group">
-                    <span style="font-size:11px;">输入查询域名:</span>
+                    <span style="font-size:11px;">Enter Query Domain:</span>
                     <input type="text" class="input-text" id="dns-input" value="google.com">
-                    <button class="btn" style="background-color:#6B8272;" onclick="resolveDNS()">发起 DNS 解析请求 (53 端口)</button>
-                    <button class="btn" style="background-color:#7A7A7A;" onclick="resetSvc()">重置沙盒模拟器</button>
+                    <button class="btn" style="background-color:#6B8272;" onclick="resolveDNS()">Send DNS Request (Port 53)</button>
+                    <button class="btn" style="background-color:#7A7A7A;" onclick="resetSvc()">Reset Sandbox</button>
                 </div>
                 <div class="visualizer" id="tproxy-vis" style="min-height:250px;">
                     <div class="status-badge" style="border-style: solid; border-color:#24324F;">
@@ -238,7 +238,7 @@
     </div>
 
     <script>
-        const isEn = false;
+        const isEn = true;
 
         // Localized Console Messages
         const msgTcPkt = isEn ? "[TC Ingress] Captured TCP segment. Querying SOCKMAP..." : "[TC Ingress] 捕获入站 TCP 段，查询 SOCKMAP 映射表...";

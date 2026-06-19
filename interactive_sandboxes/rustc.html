@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>rustc 借用检查与多态分派仿真沙盒</title>
+    <title>rustc Borrow Checker & Dispatch Sandbox</title>
     <style>
         body {
             background-color: #121824;
@@ -122,18 +122,18 @@
 </head>
 <body>
     <div class="container">
-        <h1>rustc 借用检查与多态分派仿真沙盒</h1>
+        <h1>rustc Borrow Checker & Dispatch Sandbox</h1>
         <div class="grid">
             <!-- Sandbox 1: NLL Borrow Checker -->
             <div class="card">
-                <h2>rustc NLL 借用检查与生命周期冲突模拟器</h2>
+                <h2>rustc NLL Borrow Checker Simulation</h2>
                 <div class="control-group">
                     <select id="code-select">
-                        <option value="ok_read">安全示例：允许多个只读共享</option>
-                        <option value="err_write">错误示例：只读共享时尝试修改 (Write-Read Conflict)</option>
-                        <option value="err_dangling">错误示例：引用寿命超出所有者 (Dangling Pointer)</option>
+                        <option value="ok_read">Safe: Concurrent Read Shares</option>
+                        <option value="err_write">Error: Mutation During Read</option>
+                        <option value="err_dangling">Error: Reference Outlives Owner</option>
                     </select>
-                    <button class="btn" onclick="checkBorrow()">一键静态借用检查</button>
+                    <button class="btn" onclick="checkBorrow()">Trigger Borrow Check</button>
                 </div>
                 <div class="visualizer" id="borrow-visualizer">
                     <div class="step-row" id="source-code-box">Source Code: (Select a program above)</div>
@@ -142,19 +142,19 @@
                     <div class="step-row" id="borrowck-res-box" style="font-weight:bold;">Borrow Checker Verdict: (Waiting...)</div>
                 </div>
                 <div class="console" id="borrow-console">
-                    [诊断信息控制台] 准备就绪。触发静态借用检查以查看错误及 suggestions。
+                    [Diagnostics Console] Ready. Run compiler checks to see errors and suggestions.
                 </div>
             </div>
 
             <!-- Sandbox 2: Monomorphization vs Trait Object -->
             <div class="card">
-                <h2>rustc 泛型单态化与虚表分派分析器</h2>
+                <h2>rustc Monomorphization vs Trait Object Dispatch</h2>
                 <div class="control-group">
                     <select id="dispatch-select">
-                        <option value="static">静态分派：泛型单态化 (foo<T>)</option>
-                        <option value="dynamic">动态分派：特征对象 (&dyn Trait)</option>
+                        <option value="static">Static Dispatch: Generics (foo<T>)</option>
+                        <option value="dynamic">Dynamic Dispatch: Trait Objects (&dyn Trait)</option>
                     </select>
-                    <button class="btn" style="background-color:#755B77;" onclick="compareDispatch()">对比编译内存布局</button>
+                    <button class="btn" style="background-color:#755B77;" onclick="compareDispatch()">Compare Memory Layout</button>
                 </div>
                 <div class="visualizer">
                     <div class="layout-diagram" id="layout-diagram-box">
@@ -171,7 +171,7 @@
                     </div>
                 </div>
                 <div class="console" id="dispatch-console">
-                    [虚表解析器] 准备就绪。选择一种分派策略以比较编译产物与内存结构。
+                    [VTable Analyzer] Ready. Select a dispatch strategy to compare memory structures.
                 </div>
             </div>
         </div>
@@ -222,7 +222,7 @@
 
         function compareDispatch() {
             const val = document.getElementById('dispatch-select').value;
-            const isEn = false;
+            const isEn = true;
             const code1 = document.getElementById('layout-code-1');
             const code2 = document.getElementById('layout-code-2');
             const mem1 = document.getElementById('layout-mem-1');

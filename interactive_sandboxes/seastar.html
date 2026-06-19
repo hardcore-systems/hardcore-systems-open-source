@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Seastar Shard-per-Core 与异步链式调度沙盒</title>
+    <title>Seastar Shard-per-Core & Async Chain Sandbox</title>
     <style>
         body {
             background-color: #121824;
@@ -145,14 +145,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>Seastar Shard-per-Core 与异步链式调度沙盒</h1>
+        <h1>Seastar Shard-per-Core & Async Chain Sandbox</h1>
         <div class="grid">
             <!-- Sandbox 1: Shard-per-Core Pinning -->
             <div class="card">
-                <h2>Shard-per-Core 亲和绑定与跨核 SPSC 消息队列模拟</h2>
+                <h2>Shard-per-Core CPU Pinning & SPSC Queue Simulator</h2>
                 <div class="control-group">
-                    <button class="btn" style="background-color:#4B5F7A;" onclick="addTaskCore0()">在 Core 0 线程中启动任务</button>
-                    <button class="btn" style="background-color:#9A825A;" onclick="sendCrossCoreMsg()">发起跨核 SPSC 消息 (Core 0 ➜ Core 2)</button>
+                    <button class="btn" style="background-color:#4B5F7A;" onclick="addTaskCore0()">Spawn Task on Core 0</button>
+                    <button class="btn" style="background-color:#9A825A;" onclick="sendCrossCoreMsg()">Send Cross-Core Msg (Core 0 ➜ Core 2)</button>
                 </div>
                 <div class="visualizer" id="shard-vis">
                     <div class="status-badge" id="lock-state">Lock contention: 0% | Dynamic locks acquired: 0</div>
@@ -185,11 +185,11 @@
 
             <!-- Sandbox 2: Future/Promise Chain -->
             <div class="card">
-                <h2>异步非阻塞 Future/Promise 流水线模拟</h2>
+                <h2>Asynchronous Future/Promise Pipeline Simulator</h2>
                 <div class="control-group">
-                    <button class="btn" style="background-color:#6B8272;" onclick="sendPacket()">发送网络数据包</button>
-                    <button class="btn" style="background-color:#755B77;" onclick="stepChain()">单步运行执行异步链</button>
-                    <button class="btn" style="background-color:#7A7A7A;" onclick="resetSvc()">重置沙盒模拟</button>
+                    <button class="btn" style="background-color:#6B8272;" onclick="sendPacket()">Send Network Packet</button>
+                    <button class="btn" style="background-color:#755B77;" onclick="stepChain()">Execute Next Pipeline Step</button>
+                    <button class="btn" style="background-color:#7A7A7A;" onclick="resetSvc()">Reset Sandbox</button>
                 </div>
                 <div class="visualizer" id="chain-vis">
                     <div class="status-badge" id="reactor-state">Reactor state: Idle (Thread non-blocked)</div>
@@ -209,7 +209,7 @@
     </div>
 
     <script>
-        const isEn = false;
+        const isEn = true;
 
         // Localized Console Messages
         const msgSpawn0 = isEn ? "[Core 0] Spawning local task. Running on pinned thread. Locks acquired: 0." : "[Core 0] 启动本地任务。硬绑定线程运行中，无锁获得：0。";

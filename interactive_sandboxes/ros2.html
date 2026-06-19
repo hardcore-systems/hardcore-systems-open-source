@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>ROS 2 DDS 发现发现与零拷贝共享内存双仿真沙盒</title>
+    <title>ROS 2 DDS Discovery & Zero-Copy Shared Memory Sandbox</title>
     <style>
         body {
             background-color: #121824;
@@ -180,34 +180,34 @@
 </head>
 <body>
     <div class="container">
-        <h1>ROS 2 DDS 发现发现与零拷贝共享内存双仿真沙盒</h1>
+        <h1>ROS 2 DDS Discovery & Zero-Copy Shared Memory Sandbox</h1>
         <div class="grid">
             <!-- Sandbox 1: DDS Discovery & QoS -->
             <div class="card">
-                <h2>ROS 2 DDS 节点发现与 QoS 策略模拟</h2>
+                <h2>ROS 2 DDS Discovery & QoS Simulator</h2>
                 <div class="control-group">
                     <div class="row">
-                        <strong>发布者节点 Offered QoS:</strong>
+                        <strong>Publisher Node (Offer):</strong>
                         <select id="pub-qos" onchange="runQosDiscovery()">
                             <option value="reliable">Reliable</option>
                             <option value="best_effort">Best Effort</option>
                         </select>
                     </div>
                     <div class="row">
-                        <strong>订阅者节点 Requested QoS:</strong>
+                        <strong>Subscriber Node (Request):</strong>
                         <select id="sub-qos" onchange="runQosDiscovery()">
                             <option value="reliable">Reliable</option>
                             <option value="best_effort">Best Effort</option>
                         </select>
                     </div>
                     <div class="row">
-                        <strong>网络丢包模拟:</strong>
+                        <strong>Network Packet Loss:</strong>
                         <select id="net-loss">
                             <option value="0">0% Loss</option>
                             <option value="20">20% Loss</option>
                             <option value="50">50% Loss</option>
                         </select>
-                        <button class="btn" onclick="transmitMessage()">发送话题消息</button>
+                        <button class="btn" onclick="transmitMessage()">Transmit Msg</button>
                     </div>
                 </div>
                 <div class="visualizer">
@@ -227,7 +227,7 @@
                     </div>
                 </div>
                 <div class="console" id="qos-console">
-                    [控制台] 调节 QoS 配置可即时测试简单发现协议 SDP 的匹配状态。
+                    [Console] Adjust QoS settings to examine SDP matching status.
                 </div>
             </div>
 
@@ -266,7 +266,7 @@
                     </div>
                 </div>
                 <div class="console" id="shm-console">
-                    [控制台] 点击运行性能评估，对比传统套接字复制与共享内存零拷贝的时延与 CPU 开销差异。
+                    [Console] Press Execute Benchmark to compare serialization/copy vs zero-copy IPC.
                 </div>
             </div>
         </div>
@@ -277,7 +277,7 @@
         function runQosDiscovery() {
             const pub = document.getElementById("pub-qos").value;
             const sub = document.getElementById("sub-qos").value;
-            const isEn = false;
+            const isEn = true;
 
             // Offered vs Requested logic: Offered must be >= Requested (Reliable > BestEffort)
             let isCompatible = true;
@@ -314,7 +314,7 @@
             isTransmitting = true;
             const loss = parseInt(document.getElementById("net-loss").value);
             const pub = document.getElementById("pub-qos").value;
-            const isEn = false;
+            const isEn = true;
 
             const pkt = document.getElementById("sim-packet");
             pkt.style.display = "block";
@@ -360,7 +360,7 @@
         // Sandbox 2: Shared Memory
         function runShmBenchmark() {
             const size = parseInt(document.getElementById("payload-size").value);
-            const isEn = false;
+            const isEn = true;
 
             // Compute values
             let copyTime, copyCpu, shmTime, shmCpu;

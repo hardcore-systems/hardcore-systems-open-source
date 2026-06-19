@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>一致性哈希负载漂移与消息队列吞吐消峰仿真实验室</title>
+    <title>Consistent Hashing Ring & MQ Ingress Buffering Simulator Lab</title>
     <style>
         body {
             background-color: #1a202c;
@@ -147,24 +147,24 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>一致性哈希负载漂移与消息队列吞吐消峰仿真实验室</h1>
-            <p>分布式架构核心组件决策参数仿真交互设计系统</p>
+            <h1>Consistent Hashing Ring & MQ Ingress Buffering Simulator Lab</h1>
+            <p>Opinionated Architecture Design Interactive Lab</p>
         </div>
 
         <div class="sandbox-grid">
             <!-- Sandbox 1: Consistent Hashing Ring -->
             <div class="sandbox-card">
-                <h2>1. 一致性哈希环负载漂移模拟器</h2>
+                <h2>1. Consistent Hashing Ring & Node Drift</h2>
                 <div class="control-group">
                     <div class="control-label">
-                        <span>虚拟节点倍率 (Virtual Nodes)</span>
+                        <span>Virtual Nodes</span>
                         <span id="vnodes-val">3x</span>
                     </div>
                     <input type="range" id="vnodes-slider" min="1" max="15" value="3" class="control-input" style="padding: 0;">
                 </div>
                 <div class="control-group" style="display: flex; gap: 10px;">
-                    <button class="btn" id="add-node-btn">新增物理节点</button>
-                    <button class="btn btn-danger" id="remove-node-btn">下线物理节点</button>
+                    <button class="btn" id="add-node-btn">Add Node</button>
+                    <button class="btn btn-danger" id="remove-node-btn">Remove Node</button>
                 </div>
                 
                 <div class="visualizer-box">
@@ -176,15 +176,15 @@
 
                 <div class="dashboard">
                     <div class="dash-item">
-                        <div>活跃节点数</div>
+                        <div>Active Nodes</div>
                         <div class="dash-val" id="active-nodes-val">3</div>
                     </div>
                     <div class="dash-item">
-                        <div>负载标准差 (SD)</div>
+                        <div>Key Balance SD</div>
                         <div class="dash-val highlight-green" id="hashing-sd-val">12.5</div>
                     </div>
                     <div class="dash-item">
-                        <div>扩缩容漂移 Key</div>
+                        <div>Keys Drifted</div>
                         <div class="dash-val highlight-red" id="drift-key-val">0</div>
                     </div>
                 </div>
@@ -192,17 +192,17 @@
 
             <!-- Sandbox 2: MQ Ingress Buffering & Backpressure -->
             <div class="sandbox-card">
-                <h2>2. 队列消息堆积与背压消峰模拟器</h2>
+                <h2>2. MQ Buffer & Consumer Lag (RabbitMQ vs Kafka)</h2>
                 <div class="control-group">
                     <div class="control-label">
-                        <span>生产端发送速率 (Ingress Rate)</span>
+                        <span>Ingress Message Rate</span>
                         <span id="ingress-val">50 msg/s</span>
                     </div>
                     <input type="range" id="ingress-slider" min="10" max="150" value="50" class="control-input" style="padding: 0;">
                 </div>
                 <div class="control-group">
                     <div class="control-label">
-                        <span>消费端处理速率 (Egress Rate)</span>
+                        <span>Consumer Processing Rate</span>
                         <span id="egress-val">30 msg/s</span>
                     </div>
                     <input type="range" id="egress-slider" min="10" max="150" value="30" class="control-input" style="padding: 0;">
@@ -212,39 +212,39 @@
                     <!-- RabbitMQ Box -->
                     <div>
                         <div class="control-label">
-                            <strong>RabbitMQ (推模式 + 物理背压)</strong>
-                            <span id="rmq-status" style="color: #6b8272;">正常运行</span>
+                            <strong>RabbitMQ (Push + TCP flow control)</strong>
+                            <span id="rmq-status" style="color: #6b8272;">Healthy</span>
                         </div>
                         <div class="queue-bar-container">
                             <div class="queue-bar" id="rmq-bar"></div>
                         </div>
-                        <div style="font-size: 11px; color: #a0aec0;" id="rmq-metric">队列：0% | 生产速度：50 msg/s</div>
+                        <div style="font-size: 11px; color: #a0aec0;" id="rmq-metric">Queue: 0% | Producer Speed: 50 msg/s</div>
                     </div>
 
                     <!-- Kafka Box -->
                     <div>
                         <div class="control-label">
-                            <strong>Apache Kafka (拉模式 + 顺序日志堆积)</strong>
-                            <span id="kafka-status" style="color: #6b8272;">正常运行</span>
+                            <strong>Apache Kafka (Pull + Lag Buffer)</strong>
+                            <span id="kafka-status" style="color: #6b8272;">Healthy</span>
                         </div>
                         <div class="queue-bar-container">
                             <div class="queue-bar" id="kafka-bar"></div>
                         </div>
-                        <div style="font-size: 11px; color: #a0aec0;" id="kafka-metric">队列容量：0% | 消费积压：0 msgs</div>
+                        <div style="font-size: 11px; color: #a0aec0;" id="kafka-metric">Queue: 0% | Consumer Lag: 0 msgs</div>
                     </div>
                 </div>
 
                 <div class="dashboard">
                     <div class="dash-item">
-                        <div>RabbitMQ 阻断限流</div>
+                        <div>RabbitMQ Backpressure</div>
                         <div class="dash-val highlight-red" id="rmq-bp-val">OFF</div>
                     </div>
                     <div class="dash-item">
-                        <div>Kafka 消费延迟</div>
+                        <div>Kafka Consumer Lag</div>
                         <div class="dash-val highlight-red" id="kafka-lag-val">0</div>
                     </div>
                     <div class="dash-item">
-                        <div>Kafka 丢包速率</div>
+                        <div>Kafka Drop Rate</div>
                         <div class="dash-val highlight-red" id="kafka-drop-val">0 /s</div>
                     </div>
                 </div>
@@ -413,19 +413,19 @@
             }
 
             if (rmqSize >= 95) {
-                document.getElementById('rmq-status').innerText = '触发背压，生产端阻塞';
+                document.getElementById('rmq-status').innerText = 'Backpressure Active';
                 document.getElementById('rmq-status').style.color = '#9c6666';
                 document.getElementById('rmq-bp-val').innerText = 'ON';
                 document.getElementById('rmq-bp-val').className = 'dash-val highlight-red';
                 // Enforce production rate lock
                 const currentIngress = egressRate;
-                document.getElementById('rmq-metric').innerText = `队列：100% | 生产限速阻断：${currentIngress} msg/s`;
+                document.getElementById('rmq-metric').innerText = `Queue: 100% | Producer Speed (Blocked): ${currentIngress} msg/s`;
             } else {
-                document.getElementById('rmq-status').innerText = '正常运行';
+                document.getElementById('rmq-status').innerText = 'Healthy';
                 document.getElementById('rmq-status').style.color = '#6b8272';
                 document.getElementById('rmq-bp-val').innerText = 'OFF';
                 document.getElementById('rmq-bp-val').className = 'dash-val highlight-green';
-                document.getElementById('rmq-metric').innerText = `队列容量：${Math.floor(rmqSize)}% | 生产速度：${ingressRate} msg/s`;
+                document.getElementById('rmq-metric').innerText = `Queue: ${Math.floor(rmqSize)}% | Producer Speed: ${ingressRate} msg/s`;
             }
             document.getElementById('rmq-bar').style.width = rmqSize + '%';
             if (rmqSize >= 95) document.getElementById('rmq-bar').className = 'queue-bar full';
@@ -441,18 +441,18 @@
             }
 
             if (kafkaSize >= 95) {
-                document.getElementById('kafka-status').innerText = '磁盘缓冲区溢出 | 驱逐丢包';
+                document.getElementById('kafka-status').innerText = 'Queue Overflow | Disk Eviction';
                 document.getElementById('kafka-status').style.color = '#9c6666';
                 kafkaDrop = delta;
                 document.getElementById('kafka-drop-val').innerText = kafkaDrop + ' /s';
             } else {
-                document.getElementById('kafka-status').innerText = '正常运行';
+                document.getElementById('kafka-status').innerText = 'Healthy';
                 document.getElementById('kafka-status').style.color = '#6b8272';
                 kafkaDrop = 0;
                 document.getElementById('kafka-drop-val').innerText = '0 /s';
             }
             document.getElementById('kafka-lag-val').innerText = kafkaLag;
-            document.getElementById('kafka-metric').innerText = `缓存水位：${Math.floor(kafkaSize)}% | 消费者积压：${kafkaLag} msgs`;
+            document.getElementById('kafka-metric').innerText = `Queue: ${Math.floor(kafkaSize)}% | Consumer Lag: ${kafkaLag} msgs`;
             document.getElementById('kafka-bar').style.width = kafkaSize + '%';
             if (kafkaSize >= 95) document.getElementById('kafka-bar').className = 'queue-bar full';
             else document.getElementById('kafka-bar').className = 'queue-bar';
